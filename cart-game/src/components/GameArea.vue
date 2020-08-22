@@ -14,13 +14,20 @@
             </transition-group>
         </div>
         <div class="container">
-            <app-default-card />
+            <transition name="rotate" mode="out-in">
+                <component 
+                    :is="activeCard"
+                    :card="answerCard"
+                    @click.native="showCard(answerCard)"
+                >
+                </component>
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
-    import Card from './Card';
+    import Card from "./Card";
     import DefaultCard from "./DefaultCard";
 
     export default {
@@ -31,20 +38,37 @@
         data() {
             return {
                 selectedCard: null,
+                activeCard: 'app-default-card',
                 answerCard: {},
                 cards: [
-                    {id: 1, component: 'app-cards', image: '/src/assets/card-1.jpg'},
-                    {id: 2, component: 'app-cards', image: '/src/assets/card-2.jpg'},
-                    {id: 3, component: 'app-cards', image: '/src/assets/card-3.jpg'},
-                    {id: 4, component: 'app-cards', image: '/src/assets/card-4.jpg'},
-                    {id: 5, component: 'app-cards', image: '/src/assets/card-5.jpg'},
+                    {id: 1, component: 'app-card', image: '/src/assets/card-1.jpg'},
+                    {id: 2, component: 'app-card', image: '/src/assets/card-2.jpg'},
+                    {id: 3, component: 'app-card', image: '/src/assets/card-3.jpg'},
+                    {id: 4, component: 'app-card', image: '/src/assets/card-4.jpg'},
+                    {id: 5, component: 'app-card', image: '/src/assets/card-5.jpg'},
                 ],
             }
         },
         created() {
             let answerCard = this.cards[Math.ceil(Math.random() * this.cards.length) - 1];
             this.answerCard = answerCard;
-        }
+        },
+        methods: {
+            showCard(answerCard) {
+                if (this.selectedCard !== null) {
+                    this.activeCard = answerCard.component;
+                    setTimeout(() => {
+                        if (answerCard.id === this.selectedCard) {
+                            alert('True');
+                        } else {
+                            alert('False');
+                        }
+                    }, 1000)
+                } else {
+                    alert('You have to choose a card.')
+                }
+            }
+        },
     }
 </script>
 
@@ -92,6 +116,37 @@
 
         to {
             transform: rotateY(1080deg);
+        }
+    }
+
+        /*************** Closed card animations' transitions class ****************/
+
+    .rotate-enter{}
+    .rotate-enter-active{
+        animation: rotate-in ease-in-out .5s forwards;
+    }
+    .rotate-leave{}
+    .rotate-leave-active{
+        animation: rotate-out ease-in-out .5s forwards;
+    }
+
+    @keyframes rotate-in {
+        from {
+            transform: rotateY(90deg);
+        }
+
+        to {
+            transform: rotateY(0deg);
+        }
+    }
+
+    @keyframes rotate-out {
+        from {
+            transform: rotateY(0deg);
+        }
+
+        to {
+            transform: rotateY(90deg);
         }
     }
 
