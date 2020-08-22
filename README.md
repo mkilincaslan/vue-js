@@ -1,2 +1,3 @@
-# vue-js
-Applications made with Vue.js
+# Vue.js Repository
+
+
