@@ -3,13 +3,15 @@
         <h3 class="title">Where is <span>Pogaca</span> <strong>?</strong> </h3>
         <h4 class="description">After the select an opened card click the closed card...</h4>
         <div class="container">
-            <app-card
-                :class="{ 'shadow' : selectedCard === card.id }"
-                @click.native="selectedCard = card.id"
-                v-for="card in cards" 
-                v-bind:key="card.id" 
-                :card="card" 
-            />
+            <transition-group appear name="rotate-all" class="transition-container">
+                <app-card
+                    :class="{ 'shadow' : selectedCard === card.id }"
+                    @click.native="selectedCard = card.id"
+                    v-for="card in cards" 
+                    :key="card.id" 
+                    :card="card" 
+                />
+            </transition-group>
         </div>
         <div class="container">
             <app-default-card />
@@ -62,7 +64,7 @@
         text-align: center;
     }
 
-    .container {
+    .container, .transition-container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -73,4 +75,24 @@
         box-shadow: 0px 5px 48px #30969f !important;
         transition: box-shadow .5s;
     }
+
+    /*************** Opened card animations' transitions class ****************/
+
+    .rotate-all-enter{}
+    .rotate-all-enter-active{
+        animation: rotate-all ease-in-out 2s forwards;
+    }
+    .rotate-all-leave{}
+    .rotate-all-leave-active{}
+
+    @keyframes rotate-all {
+        from {
+            transform: rotateY(0);
+        }
+
+        to {
+            transform: rotateY(1080deg);
+        }
+    }
+
 </style>
