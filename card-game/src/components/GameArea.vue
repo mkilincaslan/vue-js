@@ -59,9 +59,9 @@
                     this.activeCard = answerCard.component;
                     setTimeout(() => {
                         if (answerCard.id === this.selectedCard) {
-                            alert('True');
+                            this.$emit("activeComponentEvent", 'app-celebrate');
                         } else {
-                            alert('False');
+                            this.$emit("activeComponentEvent", 'app-failure');
                         }
                     }, 1000)
                 } else {

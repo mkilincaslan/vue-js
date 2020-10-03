@@ -1,18 +1,8 @@
-# pogaca-nerede-kart-oyunu
+# Vue.js Repository
 
-> A Vue.js project
+### Here are the applications and explanations I made while I was learning Vue.js.
 
-## Build Setup
+## Card Game
+You need to know which of the presented cards is the hidden card. The exercise I learned to use animations and nested components.
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+![Cart Game Preview](https://github.com/crazycoder-io/vue-js/blob/master/assets/cart-game-preview.png)
