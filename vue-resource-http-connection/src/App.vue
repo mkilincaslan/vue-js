@@ -31,14 +31,14 @@ export default {
     methods: {
         saveUser() {
             
-            this.$http.post("https://vuejs-vue-resource-bb818.firebaseio.com/users.json", {username: this.username})
+            this.$http.post("", {username: this.username})
             .then(data => {
                 console.log(data);
             })
             .catch(err => console.log(err));
         },
         getUsers() {
-            this.$http.get("https://vuejs-vue-resource-bb818.firebaseio.com/users.json")
+            this.$http.get()
             .then(({data}) => {
                 for(const key in data) {
                     this.usernameList.push(data[key].username);
