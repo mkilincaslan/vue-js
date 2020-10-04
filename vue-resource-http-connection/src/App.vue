@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <br>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h3>Vue Resource</h3>
@@ -7,6 +8,11 @@
                     <input type="text" name="value" id="value" placeholder="value" v-model="username">
                 </div>
                 <button class="btn btn-primary" @click="saveUser">Kaydet</button>
+                <button class="btn btn-primary" @click="getUsers">Getir</button>
+                <hr>
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="user in usernameList" :key="user">{{user}}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -18,7 +24,8 @@ export default {
     name: 'App',
     data() {
         return {
-            username: null
+            username: null,
+            usernameList: [],
         }
     },
     methods: {
@@ -27,6 +34,15 @@ export default {
             this.$http.post("https://vuejs-vue-resource-bb818.firebaseio.com/users.json", {username: this.username})
             .then(data => {
                 console.log(data);
+            })
+            .catch(err => console.log(err));
+        },
+        getUsers() {
+            this.$http.get("https://vuejs-vue-resource-bb818.firebaseio.com/users.json")
+            .then(({data}) => {
+                for(const key in data) {
+                    this.usernameList.push(data[key].username);
+                }
             })
             .catch(err => console.log(err));
         }
