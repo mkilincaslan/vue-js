@@ -4,7 +4,11 @@ import VueResource from "vue-resource"
 
 Vue.use(VueResource)
 
-Vue.http.options.root = "https://vuejs-vue-resource-bb818.firebaseio.com/users.json";
+Vue.http.options.root = "https://vuejs-vue-resource-bb818.firebaseio.com";
+Vue.http.interceptors.push((request, next) => {
+  console.log(request);
+  next();
+});
 
 Vue.config.productionTip = false
 
