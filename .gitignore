@@ -107,6 +107,4 @@ dist
 .tern-port
 
 crazycoder-portfolio/
-card-game/node_modules/
 card-game/assets/
-vue-resource-http-connection/node_modules/
