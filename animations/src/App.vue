@@ -34,6 +34,35 @@
                     <div class="alert alert-secondary" v-show="bounce">Bounce & Rubber Band Box</div>
                 </transition>
             </div>
+            <div class="col-md-6 col-md-offset-3">
+                <button class="btn btn-danger" @click="showJS = !showJS">Animate The Box With JS</button>
+                <br><br>
+                <!-- Animate with JS & :css="false" otherwise transition gets own class by default -->
+                <transition
+                    :css="false"
+                    @before-enter="beforeEnter"
+                    @enter="enter"
+                    @after-enter="afterEnter"
+                    @after-enter-cancelled="afterEnterCancelled"
+                    @before-leave="beforeLeave"
+                    @leave="leave"
+                    @after-leave="afterLeave"
+                    @after-leave-cancelled="afterLeaveCancelled"
+                >
+                    <div class="alert alert-danger" v-show="showJS">JS Animation</div>
+                </transition>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <button class="btn btn-primary" @click="addNewItem">Add New Item</button>
+                <br><br>
+                <ul class="list-group">
+                    <transition-group name="slide">
+                        <li class="list-group-item" v-for="(number, index) in numbers" :key="index" @click="removeItem(index)">Number {{ number }}</li>
+                    </transition-group>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -45,7 +74,55 @@ export default {
         return {
             show: false,
             slide: false,
-            bounce: false
+            bounce: false,
+            showJS: false,
+            JSAnimationBoxWidth: 100,
+            numbers: [1, 2, 3, 4, 5],
+        }
+    },
+    methods: {
+        beforeEnter(el) {
+            this.JSAnimationBoxWidth = 100;
+            el.style.width = this.JSAnimationBoxWidth + "px";
+        },
+        enter(el, done) {
+            let round = 1;
+            const interval = setInterval(() => {
+                el.style.width = this.JSAnimationBoxWidth + 10 * round + "px";
+                round++;
+
+                if(round > 20) {
+                    clearInterval(interval);
+                    done();
+                }
+            }, 50);
+        },
+        afterEnter() {},
+        afterEnterCancelled() {},
+        beforeLeave(el) {
+            this.JSAnimationBoxWidth = 300;
+            el.style.width = this.JSAnimationBoxWidth + "px";
+        },
+        leave(el, done) {
+            let round = 1;
+            const interval = setInterval(() => {
+                el.style.width = this.JSAnimationBoxWidth - 10 * round + "px";
+                round++;
+
+                if(round > 20) {
+                    clearInterval(interval);
+                    done();
+                }
+            }, 50);
+        },
+        afterLeave() {},
+        afterLeaveCancelled() {},
+        addNewItem() {
+            const position = Math.ceil(Math.random() * this.numbers.length);
+            this.numbers.splice(position, 0, this.numbers.length + 1)
+        },
+        removeItem(index) {
+            this.numbers.splice(index, 1);
         }
     }
 }
@@ -78,6 +155,10 @@ export default {
     .slide-leave-active{
         /* Last step */
         animation: slide-out .5s ease-out forwards;
+    }
+
+    .slide-move{
+        transition: transform 1s;
     }
 
     @keyframes slide-in {
