@@ -9,6 +9,7 @@ const router = new VueRouter({
   routes,
   mode: 'history' // history: without # - default: hash
   // # means that we use vue-routing
+  // # vue-routing kullandığımızı belirtmek için varsayılan olarak geliyor
 });
 
 Vue.config.productionTip = false;

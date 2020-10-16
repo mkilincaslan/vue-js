@@ -20,8 +20,10 @@ export default {
     methods: {
         navigateToHome() {
             this.$router.push("/");
-            // this.$router.push({path: "/"});
-            // this.$router.push({name: "Anasayfa"});
+            // this.$router.push({path: "/"}); // To route with path
+            // this.$router.push({name: "Anasayfa"}); // To route with name attribute
+            // this.$router.push({name: "Anasayfa", query: {key: "value"}}); // Send query
+            // this.$router.push({name: "Anasayfa", params: {key: "value"}}); // Set params
         }
     },
     /**

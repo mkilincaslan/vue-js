@@ -2,17 +2,24 @@ import Home from './components/Home.vue';
 import Users from './components/Users.vue';
 import User from './components/User.vue';
 import UserList from './components/UserList.vue';
+import Header from './components/Header.vue';
 
 export default [
     {
         path: '',
-        component: Home,
-        name: "Anasayfa"
+        name: "Anasayfa",
+        components: {
+            default: Home,
+            'header-top': Header
+        } 
     },
     {
         path: '/users',
-        component: Users,
         name: "Kullanıcılar",
+        components: {
+            default: Users,
+            'header-bottom': Header
+        },
         children: [
             {
                 // /users
