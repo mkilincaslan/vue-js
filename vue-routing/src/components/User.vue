@@ -2,6 +2,7 @@
     <div>
         <div v-show="id">
             <p>User Id {{id}}</p>
+            <p>User Id directly from params: {{ $route.params.id }}</p>
         </div>
         <br>
         <button class="btn btn-success" @click="navigateToHome">Home Component</button>
