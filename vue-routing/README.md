@@ -1,5 +1,9 @@
 # vue-routing
 
+## Description
+    Beginner vue-routing usage
+    Başlangıç seviyede vue-routing kullanımı
+
 ## Project setup
 ```
 npm install
@@ -20,5 +24,3 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
