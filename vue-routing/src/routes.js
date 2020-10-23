@@ -35,6 +35,10 @@ export default [
             },
         ]
     },
+    {
+        path: "/redirect",
+        redirect: "/user", /* {name: "Anasayfa"} */
+    },
     // {
     //     path: '/user/:id',
     //     component: User,
