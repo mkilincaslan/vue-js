@@ -36,8 +36,8 @@ export default [
         ]
     },
     {
-        path: "/redirect",
-        redirect: "/user", /* {name: "Anasayfa"} */
+        path: "*",
+        redirect: "/", /* {name: "Anasayfa"} */
     },
     // {
     //     path: '/user/:id',
