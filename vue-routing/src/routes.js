@@ -18,7 +18,8 @@ export default [
         name: "Kullanıcılar",
         components: {
             default: Users,
-            'header-bottom': Header
+            'header-top': Header, // For animation
+            // 'header-bottom': Header
         },
         children: [
             {

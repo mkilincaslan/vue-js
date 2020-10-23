@@ -6,6 +6,7 @@
         </div>
         <br>
         <button class="btn btn-success" @click="navigateToHome">Home Component</button>
+        <button class="btn btn-success" @click="navigateToHomeData">Home Component & Data Element</button>
     </div>
 </template>
 
@@ -24,6 +25,9 @@ export default {
             // this.$router.push({name: "Anasayfa"}); // To route with name attribute
             // this.$router.push({name: "Anasayfa", query: {key: "value"}}); // Send query
             // this.$router.push({name: "Anasayfa", params: {key: "value"}}); // Set params
+        },
+        navigateToHomeData() {
+            this.$router.push({name: "Anasayfa", hash: '#data'}); // To route with name attribute
         }
     },
     /**
