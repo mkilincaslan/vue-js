@@ -32,7 +32,12 @@ export default [
                 // /users/11
                 path: ':id',
                 component: User,
-                name: "Kullanıcı"
+                name: "Kullanıcı",
+                beforeEnter: (to, from, next) => {
+                    // local control
+                    // yerel kontrol
+                    next();
+                }
             },
         ]
     },

@@ -40,6 +40,11 @@ export default {
     //     "$route"(to) {
     //         this.id = to.params.id;
     //     }
-    // }
+    // },
+    beforeEnter: (to, from, next) => {
+        // component level control
+        // bileşen düzeyinde kontrol
+        next();
+    }
 }
 </script>
