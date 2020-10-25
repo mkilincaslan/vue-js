@@ -41,10 +41,15 @@ export default {
     //         this.id = to.params.id;
     //     }
     // },
-    beforeEnter: (to, from, next) => {
+    beforeRouteEnter: (to, from, next) => {
         // component level control
         // bileşen düzeyinde kontrol
         next();
-    }
+    },
+    // beforeRouteLeave (to, from, next) {
+    //     // component level leave control
+    //     // bileşen düzeyinde çıkış kontrolü
+    //     next();
+    // }
 }
 </script>

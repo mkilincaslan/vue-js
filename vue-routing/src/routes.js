@@ -1,8 +1,15 @@
 import Home from './components/Home.vue';
-import Users from './components/Users.vue';
+import Header from './components/Header.vue';
+
+// lazy load
+const Users = resolve => {
+    require.ensure(['./components/Users.vue'], () => {
+        resolve(require('./components/Users.vue'));
+    })
+};
+// import Users from './components/Users.vue';
 import User from './components/User.vue';
 import UserList from './components/UserList.vue';
-import Header from './components/Header.vue';
 
 export default [
     {
