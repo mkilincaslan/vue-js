@@ -5,6 +5,11 @@ import Vuex  from 'vuex';
  * Get Stores 
  */
 import counter from './modules/counter';
+import { setValueToTwoWay } from './mutations';
+import {getTwoWayBinding} from './getters';
+import {setValueToTwoWay_} from './actions'
+
+// import * as mutations from './mutations'; // Another way - Diğer bir kullanım
 
 Vue.use(Vuex);
 
@@ -13,19 +18,14 @@ const store =  new Vuex.Store({
         two_way_binding: 10,
     },
     getters: {
-        getTwoWayBinding(state) {
-            return state.two_way_binding;
-        }
+        getTwoWayBinding,
     },
     mutations: {
-        setValueToTwoWay(state, payload) {
-            state.two_way_binding = payload;
-        }
+        setValueToTwoWay,
     },
+    // mutations, // Another way - Diğer bir kullanım
     actions: {
-        setValueToTwoWay_: ({commit}, payload) => {
-            setTimeout(() => commit('setValueToTwoWay', payload), 1000);
-        }
+        setValueToTwoWay_,
     },
     modules: {
         counter,
