@@ -37,7 +37,7 @@ export default {
      * So id won't be updated.
      */
     // watch: {
-    //     "$route"(to) {
+    //     "$route"(to, from) {
     //         this.id = to.params.id;
     //     }
     // },
