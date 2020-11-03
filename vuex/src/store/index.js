@@ -24,11 +24,15 @@ const store =  new Vuex.Store({
         }
     },
     actions: {
-        increment: ({commit}) => {
-            setTimeout(() => commit('increaseCounter', 1),2000);
+        increment: ({commit}, payload) => {
+            // payload is a parameter that we assign the function -- payload bir parametredir ve kullandığımız yerden fonksiyona göndeririz
+            const {time, value} = payload;
+            setTimeout(() => commit('increaseCounter', value), time);
         },
-        decrement: ({commit}) => {
-            setTimeout(() => commit('decreaseCounter', 1),2000);
+        decrement: ({commit}, payload) => {
+            // payload is a parameter that we assign the function -- payload bir parametredir ve kullandığımız yerden fonksiyona göndeririz
+            const {time, value} = payload;
+            setTimeout(() => commit('decreaseCounter', value), time);
         } 
     }
 });

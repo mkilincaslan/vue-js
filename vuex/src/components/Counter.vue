@@ -4,8 +4,8 @@
         <button class="btn btn-danger" @click="decreaseCounter(1)">- Azalt</button>
         <hr>
         <p>Actions</p>
-        <button class="btn btn-success" @click="increment">+ Arttır</button>
-        <button class="btn btn-danger" @click="decrement">- Azalt</button>
+        <button class="btn btn-success" @click="increment({time: 1000, value: 2})">+ Arttır</button>
+        <button class="btn btn-danger" @click="decrement({time: 500, value: 1})">- Azalt</button>
     </div>
 </template>
 
