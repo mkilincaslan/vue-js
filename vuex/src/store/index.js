@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 const store =  new Vuex.Store({
     state: {
-        counter: 0   
+        counter: 0,
+        two_way_binding: 10,
     },
     getters: {
         getDoubleCounter(state) {
@@ -13,14 +14,20 @@ const store =  new Vuex.Store({
         },
         getCounter(state) {
             return state.counter;
+        },
+        getTwoWayBinding(state) {
+            return state.two_way_binding;
         }
     },
     mutations: {
-        increaseCounter(state, value) {
-            state.counter += value;
+        increaseCounter(state, payload) {
+            state.counter += payload;
         },
-        decreaseCounter(state, value) {
-            state.counter -= value;
+        decreaseCounter(state, payload) {
+            state.counter -= payload;
+        },
+        setValueToTwoWay(state, payload) {
+            state.two_way_binding = payload;
         }
     },
     actions: {
@@ -33,7 +40,10 @@ const store =  new Vuex.Store({
             // payload is a parameter that we assign the function -- payload bir parametredir ve kullandığımız yerden fonksiyona göndeririz
             const {time, value} = payload;
             setTimeout(() => commit('decreaseCounter', value), time);
-        } 
+        },
+        setValueToTwoWay_: ({commit}, payload) => {
+            setTimeout(() => commit('setValueToTwoWay', payload), 1000);
+        }
     }
 });
 
