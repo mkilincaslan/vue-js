@@ -7,7 +7,7 @@
         <button class="btn btn-success" @click="increment({time: 1000, value: 2})">+ Arttır</button>
         <button class="btn btn-danger" @click="decrement({time: 500, value: 1})">- Azalt</button>
         <hr>
-        <input type="text" :value="value" @input="setValue">
+        <input type="text" v-model="value">
         <p>Value: {{ value }}</p>
     </div>
 </template>
@@ -16,24 +16,25 @@
     import { mapMutations, mapActions } from 'vuex';
     export default {
         computed: {
-            value() {
-                return this.$store.getters.getTwoWayBinding;
+            value: {
+                get() {
+                    return this.$store.getters.getTwoWayBinding;
+                },
+                set(value) {
+                    this.$store.commit('setValueToTwoWay', value);
+                    // this.$store.dispatch('setValueToTwoWay_', value); // Actions
+                }
             }
         },
         methods : {
             ...mapMutations([
                 'increaseCounter',
                 'decreaseCounter',
-                'setValueToTwoWay',
             ]),
             ...mapActions([
                 'increment',
                 'decrement',
-                'setValueToTwoWay_',
             ]),
-            setValue(event) {
-                this.$store.dispatch('setValueToTwoWay_', event.target.value);
-            }
             // Before mapActions - mapActions fonksiyonu öncesi
             // increment() {
             //     this.$store.dispatch('increment');
