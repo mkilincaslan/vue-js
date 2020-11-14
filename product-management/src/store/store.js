@@ -3,6 +3,11 @@
 import Vuex from "vuex";
 import Vue from "vue";
 import product from "./modules/product";
+
+/* 
+    * Get getters, actions and mutations from outsource
+    * Dışarıda ayrıca yazdığımız getters, actions ve mutations dosyalarını dahil edelim
+*/
 import * as getters from "./getters";
 import * as actions from "./actions";
 import * as mutations from "./mutations";
