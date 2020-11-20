@@ -7,23 +7,23 @@
                     <hr>
                     <div class="form-group">
                         <label>Product Name</label>
-                        <input type="text" class="form-control" placeholder="Please enter the product name..">
+                        <input v-model="product.title" type="text" class="form-control" placeholder="Please enter the product name..">
                     </div>
                     <div class="form-group">
                         <label>Piece</label>
-                        <input type="text" class="form-control" placeholder="Please enter the product piece..">
+                        <input v-model="product.piece" type="number" class="form-control" placeholder="Please enter the product piece..">
                     </div>
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="text" class="form-control" placeholder="Please enter the product price..">
+                        <input v-model="product.price" type="number" class="form-control" placeholder="Please enter the product price..">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea cols="30" rows="5" placeholder="Please enter the product description..."
+                        <textarea v-model="product.description" cols="30" rows="5" placeholder="Please enter the product description..."
                                 class="form-control"></textarea>
                     </div>
                     <hr>
-                    <button class="btn btn-primary">Save</button>
+                    <button class="btn btn-primary" @click="saveProduct">Save</button>
                 </div>
             </div>
         </div>
@@ -31,9 +31,23 @@
 </template>
 
 <script>
-export default {
-
-}
+    export default {
+        data() {
+            return {
+                product: {
+                    title: null,
+                    description: null,
+                    price: null,
+                    piece: null,
+                }
+            }
+        },
+        methods: {
+            saveProduct() {
+                this.$store.dispatch('saveProduct', { product: this.product });
+            }
+        }
+    }
 </script>
 
 <style>

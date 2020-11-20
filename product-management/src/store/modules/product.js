@@ -1,4 +1,6 @@
 "use strict";
+import Vue from 'vue';
+import constants from '../../config/constants.json';
 
 const state = {
     products: [],
@@ -23,8 +25,21 @@ const actions = {
     initApp() {
         // Vue Resource
     },
-    saveProduct() {
+    saveProduct({ commit }, payload) {
         // Vue Resource
+        const { product } = payload;
+        Vue
+            .http
+            .post(`${constants['firebase-url']}products.json`, product)
+            .then(response => {
+                if (response.status == 200) {
+                    commit('updateProductList', product);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
     },
     sellProduct() {
         // Vue Resource
