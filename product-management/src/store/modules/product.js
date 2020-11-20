@@ -33,6 +33,7 @@ const actions = {
             .post(`${constants['firebase-url']}products.json`, product)
             .then(response => {
                 if (response.status == 200) {
+                    product.id = response.body.name;
                     commit('updateProductList', product);
                 }
             })
