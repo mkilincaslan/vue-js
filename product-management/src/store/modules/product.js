@@ -25,7 +25,7 @@ const actions = {
     initApp() {
         // Vue Resource
     },
-    saveProduct({ commit }, payload) {
+    saveProduct({ dispatch, commit }, payload) {
         // Vue Resource
         const { product } = payload;
         Vue
@@ -33,8 +33,20 @@ const actions = {
             .post(`${constants['firebase-url']}products.json`, product)
             .then(response => {
                 if (response.status == 200) {
+                    // Update the product list with new item
+                    // Ürün listesinin güncellenmesi
                     product.id = response.body.name;
                     commit('updateProductList', product);
+
+                    // Update the trade result
+                    // Bakiye güncelleme
+
+                    let trade = {
+                        purchase: product.price,
+                        sale: 0,
+                        count: product.piece,
+                    }
+                    dispatch('setTradeResult', trade);
                 }
             })
             .catch(error => {
