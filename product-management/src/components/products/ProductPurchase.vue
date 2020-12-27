@@ -54,6 +54,18 @@
             saveProduct() {
                 this.$store.dispatch('saveProduct', { product: this.product });
             }
+        },
+        beforeRouteLeave (to, from, next) {
+            let { title, description, price, piece } = this.product;
+            if (title.length > 0 || description.length > 0 || price > 0 || piece > 0) {
+                if (confirm('There are unsaved data!!! Still do you want to EXIT?')) {
+                    next();
+                } else {
+                    next(false);
+                }
+            } else {
+                next();
+            }
         }
     }
 </script>
