@@ -7,6 +7,11 @@ import VueResource from 'vue-resource';
 
 Vue.use(VueResource);
 
+Vue.filter('currency', (value) => {
+  // Update the currency format with local currency settings
+  return parseFloat(value).toLocaleString(undefined, { minimumFractionDigits: 2}) + ' TL';
+});
+
 Vue.config.productionTip = false
 
 new Vue({
