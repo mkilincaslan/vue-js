@@ -19,12 +19,22 @@ export const setTradeResult = ({ state, commit }, payload) => {
             console.log(response);
         })
         .catch(error => {
-            console.log(error);
-        })
+            console.error(error);
+        });
 };
 
 /*
     Get trade result from the db
     Finans durumu için veritabanından durumu getirelim
 */
-export const getTradeResult = () => {};
+export const getTradeResult = ({ commit }) => {
+    Vue
+        .http
+        .get(`${constants['firebase-url']}trade.json`)
+        .then(response => {
+            commit('updateTradeResult', response.data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};
