@@ -23,7 +23,7 @@
                                 class="form-control"></textarea>
                     </div>
                     <hr>
-                    <button class="btn btn-primary" @click="saveProduct">Save</button>
+                    <button class="btn btn-primary" :disabled="BTNDisable" @click="saveProduct">Save</button>
                 </div>
             </div>
         </div>
@@ -35,11 +35,19 @@
         data() {
             return {
                 product: {
-                    title: null,
-                    description: null,
+                    title: "",
+                    description: "",
                     price: null,
                     piece: null,
-                }
+                },
+            }
+        },
+        computed: {
+            // check if any data is empty or null
+            // herhangi bir verinin boş ve tanımlanmamış olduğunu kontrol etme
+            BTNDisable() {
+                let { title, description, price, piece } = this.product;
+                return (title.length > 0 && description.length > 0 && price > 0 && piece > 0) ? false : true;
             }
         },
         methods: {
