@@ -17,8 +17,8 @@
                         <tr v-for="product in getProducts" :key="product.key">
                             <td class="align-middle text-center"><span class="badge badge-info"> {{ product.key }} </span></td>
                             <td class="align-middle text-center"> {{ product.title }} </td>
-                            <td class="align-middle text-center"> {{ product.piece }} </td>
-                            <td style="width: 120px;"> {{ product.price }} </td>
+                            <td class="align-middle text-center" :class="getTradeTypeClass(product.type)"> {{ product.piece }} </td>
+                            <td style="width: 120px;"> {{ product.price | currency }} </td>
                             <td class="align-middle"> {{ product.description}} </td>
                         </tr>
                         </tbody>
@@ -39,7 +39,15 @@
     import { mapGetters } from 'vuex'
     export default {
         computed: {
-            ...mapGetters(["getProducts"])
+            ...mapGetters(["getProducts"]),
+        },
+        methods: {
+            getTradeTypeClass(type) {
+                return {
+                    'bg-danger text-white': type == "buy",
+                    'bg-success text-white': type == "sell", 
+                }
+            }
         }
     }
 </script>

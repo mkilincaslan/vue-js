@@ -41,6 +41,7 @@ const actions = {
     saveProduct({ dispatch, commit }, payload) {
         // Vue Resource
         const { product } = payload;
+        product.type = 'buy';
         Vue
             .http
             .post(`${constants['firebase-url']}products.json`, product)
