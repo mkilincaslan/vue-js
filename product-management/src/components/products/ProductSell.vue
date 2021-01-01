@@ -77,13 +77,16 @@
                 this.selectedProduct = this.$store.getters.getProductInfo(this.selectedProduct.key);
             },
             sellProduct() {
-                this.sellButtonClicked = true;
-                const product = {
-                    key: this.selectedProduct.key,
-                    piece: this.productPiece,
-                };
+                if (this.productPiece > this.selectProduct.piece) alert('It cannot bigger than that we have!')
+                else {
+                    this.sellButtonClicked = true;
+                    const product = {
+                        key: this.selectedProduct.key,
+                        piece: this.productPiece,
+                    };
 
-                this.$store.dispatch("sellProduct", product);
+                    this.$store.dispatch("sellProduct", product);
+                }
             }
         },
         beforeRouteLeave (to, from, next) {
