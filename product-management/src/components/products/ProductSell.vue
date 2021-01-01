@@ -1,5 +1,11 @@
 <template>
     <div class="container">
+        <div class="loading" v-show="sellButtonClicked">
+            <div class="lds-ripple">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-6 offset-3 pt-3 card mt-5 shadow">
                 <div class="card-body">
@@ -39,7 +45,7 @@
                         <input type="text" v-model="productPiece" class="form-control" placeholder="Ürün adetini giriniz..">
                     </div>
                     <hr>
-                    <button class="btn btn-primary" @click="sellProduct">Save</button>
+                    <button class="btn btn-primary" :disabled="BTNDisable"  @click="sellProduct">Save</button>
                 </div>
             </div>
         </div>
@@ -55,16 +61,23 @@
                     key: null,
                 },
                 productPiece: 0,
+                sellButtonClicked: false,
             }
         },
         computed: {
-            ...mapGetters(["getProducts"])
+            ...mapGetters(["getProducts"]),
+            // check if any data is empty or null
+            // herhangi bir verinin boş ve tanımlanmamış olduğunu kontrol etme
+            BTNDisable() {
+                return (this.selectedProduct.key !== null && this.productPiece > 0) ? false : true;
+            }
         },
         methods: {
             selectProduct(){
                 this.selectedProduct = this.$store.getters.getProductInfo(this.selectedProduct.key);
             },
             sellProduct() {
+                this.sellButtonClicked = true;
                 const product = {
                     key: this.selectedProduct.key,
                     piece: this.productPiece,
@@ -73,6 +86,18 @@
                 this.$store.dispatch("sellProduct", product);
             }
         },
+        beforeRouteLeave (to, from, next) {
+            const { sellButtonClicked } = this;
+            if ((this.selectedProduct.key !== null || this.productPiece > 0) && !sellButtonClicked) {
+                if (confirm('There are unsaved data!!! Still do you want to EXIT?')) {
+                    next();
+                } else {
+                    next(false);
+                }
+            } else {
+                next();
+            }
+        }
     }
 </script>
 
