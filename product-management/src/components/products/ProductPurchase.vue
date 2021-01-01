@@ -40,6 +40,7 @@
                     price: null,
                     piece: null,
                 },
+                saveButtonClicked: false,
             }
         },
         computed: {
@@ -52,12 +53,14 @@
         },
         methods: {
             saveProduct() {
+                this.saveButtonClicked = true;
                 this.$store.dispatch('saveProduct', { product: this.product });
             }
         },
         beforeRouteLeave (to, from, next) {
-            let { title, description, price, piece } = this.product;
-            if (title.length > 0 || description.length > 0 || price > 0 || piece > 0) {
+            const { title, description, price, piece } = this.product;
+            const { saveButtonClicked } = this;
+            if ((title.length > 0 || description.length > 0 || price > 0 || piece > 0) && !saveButtonClicked) {
                 if (confirm('There are unsaved data!!! Still do you want to EXIT?')) {
                     next();
                 } else {

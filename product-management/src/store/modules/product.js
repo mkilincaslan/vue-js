@@ -1,5 +1,6 @@
 "use strict";
 import Vue from 'vue';
+import { router } from '../../routes';
 import constants from '../../config/constants.json';
 
 const state = {
@@ -47,6 +48,7 @@ const actions = {
                         count: product.piece,
                     }
                     dispatch('setTradeResult', trade);
+                    router.replace("/");
                 }
             })
             .catch(error => {
