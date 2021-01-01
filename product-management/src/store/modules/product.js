@@ -23,8 +23,20 @@ const mutations = {
 };
 
 const actions = {
-    initApp() {
+    initApp({ commit }) {
         // Vue Resource
+        Vue
+            .http
+            .get(`${constants['firebase-url']}products.json`)
+            .then(response => {
+                const { data } = response;
+                for(let key in data) {
+                    commit("updateProductList", { ...data[key], key });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     },
     saveProduct({ dispatch, commit }, payload) {
         // Vue Resource
@@ -36,7 +48,7 @@ const actions = {
                 if (response.status == 200) {
                     // Update the product list with new item
                     // Ürün listesinin güncellenmesi
-                    product.id = response.body.name;
+                    product.key = response.data.name;
                     commit('updateProductList', product);
 
                     // Update the trade result
@@ -52,7 +64,7 @@ const actions = {
                 }
             })
             .catch(error => {
-                console.log(error);
+                console.error(error);
             });
 
     },
