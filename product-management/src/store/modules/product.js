@@ -11,8 +11,10 @@ const getters = {
     getProducts(state) {
         return state.products;
     },
-    getProductInfo() {
-
+    getProductInfo(state) {
+        return key => state.products.find(product => {
+            return product.key == key
+        });
     }
 };
 
