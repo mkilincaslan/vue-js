@@ -36,10 +36,10 @@
                     </transition>
                     <div class="form-group">
                         <label>Piece</label>
-                        <input type="text" class="form-control" placeholder="Ürün adetini giriniz..">
+                        <input type="text" v-model="productPiece" class="form-control" placeholder="Ürün adetini giriniz..">
                     </div>
                     <hr>
-                    <button class="btn btn-primary">Save</button>
+                    <button class="btn btn-primary" @click="sellProduct">Save</button>
                 </div>
             </div>
         </div>
@@ -53,7 +53,8 @@
             return {
                 selectedProduct: {
                     key: null,
-                }
+                },
+                productPiece: 0,
             }
         },
         computed: {
@@ -62,6 +63,14 @@
         methods: {
             selectProduct(){
                 this.selectedProduct = this.$store.getters.getProductInfo(this.selectedProduct.key);
+            },
+            sellProduct() {
+                const product = {
+                    key: this.selectedProduct.key,
+                    piece: this.productPiece,
+                };
+
+                this.$store.dispatch("sellProduct", product);
             }
         },
     }

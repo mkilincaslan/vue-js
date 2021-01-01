@@ -43,7 +43,6 @@ const actions = {
     saveProduct({ dispatch, commit }, payload) {
         // Vue Resource
         const { product } = payload;
-        product.type = 'buy';
         Vue
             .http
             .post(`${constants['firebase-url']}products.json`, product)
@@ -69,10 +68,33 @@ const actions = {
             .catch(error => {
                 console.error(error);
             });
-
     },
-    sellProduct() {
+    sellProduct({ state, dispatch }, payload) {
         // Vue Resource
+        let product = state.products.find(item => {
+            return item.key == payload.key
+        });
+        Vue
+            .http
+            .patch(`${constants['firebase-url']}products/${product.key}.json`, { piece: product.piece - payload.piece })
+            .then(response => {
+                if (response.status == 200) {
+                    // Update the product piece with new item
+                    // Ürün adedinin güncellenmesi
+                    product.piece = response.data.piece;
+
+                    let trade = {
+                        purchase: 0,
+                        sale: product.price,
+                        count: product.piece,
+                    }
+                    dispatch('setTradeResult', trade);
+                    router.replace("/");
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 };
 
