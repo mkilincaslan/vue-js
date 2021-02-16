@@ -1,10 +1,14 @@
 <template>
     <div class="tag-container">
-        <span class="tag" v-for="tag in tags" :key="tag">
+        <span class="tag" v-for="(tag, i) in tags" :key="tag">
             <span class="content">{{ tag }}</span>
-            <span class="close">X</span>
+            <span class="close" @click='tags.splice(i, 1)'>X</span>
         </span>
-        <input type="text" @keydown.enter="createTag" />
+        <input 
+            type="text" 
+            @keydown.enter="createTag"
+            @keydown.backspace="removeTag"
+        />
         <div class="error" v-show="error">
             <span>{{ error }}</span>
         </div>
@@ -33,6 +37,11 @@ export default {
                 }
             }
         },
+        removeTag(event) {
+            if (event.target.value === '') {
+                this.tags.splice(this.tags.length - 1, 1);
+            }
+        }
     }
 }
 </script>
