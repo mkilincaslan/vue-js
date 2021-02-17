@@ -15,20 +15,25 @@
         name: 'Tags',
         data() {
             return {
-                tags: ['vuejs', 'nodejs', 'react']
+                tags: [],
             }
         },
         components: {
             appTag: Tag,
+        },
+        props: {
+            value: {
+                required: false,
+            }
         },
         methods: {
             createTag(event) {
                 let tag = event.target;
                 if (tag.value !== '') {
                     if (this.tags.find(e => e.trim().toLowerCase() === tag.value.trim().toLowerCase())) {
-                        this.$emit('setError', 'This tag is already added!');
+                        this.$emit('emit-error', 'This tag is already added!');
                     } else {
-                        this.$emit('setError', false);
+                        this.$emit('emit-error', false);
                         this.tags.push(tag.value);
                         tag.value = '';
                     }
@@ -38,6 +43,16 @@
                 if (event.target.value === '') {
                     this.tags.splice(this.tags.length - 1, 1);
                 }
+            }
+        },
+        created() {
+            if (this.value && this.value.length > 0) {
+                this.tags = this.value.split(',');
+            }
+        },
+        watch: {
+            tags() {
+                this.$emit('input', this.tags.join(','));
             }
         }
     }

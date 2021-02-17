@@ -1,7 +1,8 @@
 <template>
     <div class="container">
-        <app-tags @setError='errorhand($event)'/>
+        <app-tags @emit-error='errorhand($event)' v-model='tags'/>
         <app-error :error='error' />
+        {{tags}}
     </div>
 </template>
 
@@ -17,6 +18,7 @@
         data() {
             return {
                 error: null,
+                tags: 'vue.js,node.js'
             }
         },
         methods: {
