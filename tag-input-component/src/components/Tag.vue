@@ -55,6 +55,7 @@
         cursor: default;
         font-size: 14px;
         margin: 0 5px;
+        border-radius: 5px;
     }
 
     .tag .close {
