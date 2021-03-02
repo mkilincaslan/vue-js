@@ -7,8 +7,7 @@
 </template>
 
 <script>
-    import Error from './components/Error';
-    import Tags from './components/Tags';
+    import { Error, Tags } from './components';
 
     export default {
         components: {

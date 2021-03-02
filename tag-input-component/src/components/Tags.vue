@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import Tag from './Tag';
+    import { Tag } from './';
     export default {
         name: 'Tags',
         data() {
