@@ -1,6 +1,6 @@
 <template>
     <div class="tag-container">
-        <app-tag v-for="(tag, indis) in tags" :key="tag" :tag='tag' :tags='tags' :indis='indis'/>
+        <app-tag v-for="(tag, indis) in tags" :key="tag" :tag='tag' :tags='tags' :indis='indis' :color='color'/>
         <input 
             type="text" 
             @keydown.enter="createTag"
@@ -24,6 +24,11 @@
         props: {
             value: {
                 required: false,
+            },
+            color: {
+                type: String,
+                required: false,
+                default: 'primary'
             }
         },
         methods: {
