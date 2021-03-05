@@ -12,6 +12,18 @@
             <app-tags @emit-error='errorhand($event)' v-model='tags3' color='danger'/>
             {{tags3}}
         </div>
+        <div class="container">
+            <app-tags @emit-error='errorhand($event)' v-model='tags4' color='success'/>
+            {{tags4}}
+        </div>
+        <div class="container">
+            <app-tags @emit-error='errorhand($event)' v-model='tags5' color='info'/>
+            {{tags5}}
+        </div>
+        <div class="container">
+            <app-tags @emit-error='errorhand($event)' v-model='tags6' color='warning'/>
+            {{tags6}}
+        </div>
         <app-error :error='error' />
     </div>
 </template>
@@ -28,8 +40,11 @@
             return {
                 error: null,
                 tags: 'vue.js,node.js',
-                tags2: 'vue.js,node.js',
-                tags3: 'vue.js,node.js'
+                tags2: 'angular,java',
+                tags3: 'kotlin,postgresql',
+                tags4: 'c#,php',
+                tags5: 'mysql,mongoodb',
+                tags6: 'nginx,postman'
             }
         },
         methods: {
