@@ -45,11 +45,12 @@
     },
     methods : {
       onSubmit(){
-        console.log(process.env.VUE_APP_URL);
         axios
         .post(`${process.env.VUE_APP_URL}/posts.json`, { ...this.post, updatedDate : new Date()})
-        .then(response => {
-          console.log(response);
+        .then(() => {
+          for (const key in this.post) {
+            this.post[key] = "";
+          }
         })
         .catch(error => console.error(error));
       }

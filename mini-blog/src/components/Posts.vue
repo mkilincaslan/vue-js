@@ -14,6 +14,19 @@
     </div>
   </div>
 </template>
+
+<script>
+  import axios from "axios";
+  export default {
+    created() {
+      axios
+        .get(`${process.env.VUE_APP_URL}/posts.json`)
+        .then(response => console.log(response))
+        .catch(error => console.error(error));
+    }
+  }
+</script>
+
 <style>
   .card {
     width: 300px;
