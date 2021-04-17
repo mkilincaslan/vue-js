@@ -29,6 +29,7 @@
   </div>
 </template>
 <script>
+  import axios from "axios";
   export default {
     data(){
       return {
@@ -44,7 +45,13 @@
     },
     methods : {
       onSubmit(){
-        console.log({ ...this.post, updatedDate : new Date()});
+        console.log(process.env.VUE_APP_URL);
+        axios
+        .post(`${process.env.VUE_APP_URL}/posts.json`, { ...this.post, updatedDate : new Date()})
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => console.error(error));
       }
     }
   }
