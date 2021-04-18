@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import service from "../service";
   export default {
     data() {
       return {
@@ -23,8 +23,8 @@
       }
     },
     created() {
-      axios
-        .get(`${process.env.VUE_APP_URL}/posts.json`)
+      service
+        .get("/posts.json")
         .then(({ data }) => {
           for (const key in data) {
             this.posts.push({ ...data[key], id: key });

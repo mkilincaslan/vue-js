@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-  import axios from "axios";
+  import service from "../service";
   export default {
     data(){
       return {
@@ -45,14 +45,14 @@
     },
     methods : {
       onSubmit(){
-        axios
-        .post(`${process.env.VUE_APP_URL}/posts.json`, { ...this.post, updatedDate : new Date()})
-        .then(() => {
-          for (const key in this.post) {
-            this.post[key] = "";
-          }
-        })
-        .catch(error => console.error(error));
+        service
+          .post("/posts.json", { ...this.post, updatedDate : new Date()})
+          .then(() => {
+            for (const key in this.post) {
+              this.post[key] = "";
+            }
+          })
+          .catch(error => console.error(error));
       }
     }
   }
