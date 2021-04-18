@@ -3,12 +3,11 @@
     <h1 class="text-center">Yazı Listesi</h1>
     <hr>
     <div class="d-flex flex-wrap flex-row justify-content-center align-items-center">
-      <div class="card m-1" v-for="i in 5" :key="i">
-        <img class="card-img-top" src="https://blog.crazycoder.io/images/bg-header.jpg" alt="Card image cap">
+      <div class="card m-1" v-for="post in posts" :key="post.id">
+        <img class="card-img-top" :src="post.thumbnail" :alt="post.title">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.previewText }}</p>
         </div>
       </div>
     </div>
@@ -18,10 +17,19 @@
 <script>
   import axios from "axios";
   export default {
+    data() {
+      return {
+        posts: [],
+      }
+    },
     created() {
       axios
         .get(`${process.env.VUE_APP_URL}/posts.json`)
-        .then(response => console.log(response))
+        .then(({ data }) => {
+          for (const key in data) {
+            this.posts.push({ ...data[key], id: key });
+          }
+        })
         .catch(error => console.error(error));
     }
   }
