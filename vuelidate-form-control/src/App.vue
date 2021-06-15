@@ -19,7 +19,17 @@
           </div>
           <div class="form-group">
             <label>Şifre</label>
-            <input v-model="password" type="password" class="form-control" placeholder="Şifrenizi giriniz">
+            <input
+              v-model="$v.password.$model"
+              type="password"
+              class="form-control"
+              :class="{'is-invalid' : $v.password.$error}"
+              placeholder="Şifrenizi giriniz"
+            >
+            <small v-if="!$v.password.required" class="form-text text-danger">Bu alan zorunludur!</small>
+            <small v-if="!$v.password.numeric" class="form-text text-danger">Şifreniz rakamlardan olumalıdır!</small>
+            <small v-if="!$v.password.minLength" class="form-text text-danger">Min {{ $v.password.$params.minLength.min }} karakter içermelidir!</small>
+            <small v-if="!$v.password.maxLength" class="form-text text-danger">Maks {{ $v.password.$params.maxLength.max }} karakteri geçmemelidir!</small>
           </div>
           <div class="form-group">
             <label>Şifre Tekrar</label>
@@ -51,7 +61,7 @@
   </div>
 </template>
 <script>
-  import { required, email } from 'vuelidate/lib/validators';
+  import { required, email, numeric, minLength, maxLength } from 'vuelidate/lib/validators';
   export default {
     data() {
       return {
@@ -67,6 +77,12 @@
       email: {
         required,
         email
+      },
+      password: {
+        required,
+        numeric,
+        minLength: minLength(6),
+        maxLength: maxLength(8)
       }
     },
     methods: {
