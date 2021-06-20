@@ -49,9 +49,10 @@
           </div>
           <div class="form-group">
             <label>Kayıt olmak istediğiniz kategori</label>
-            <select v-model="selectedCategory" class="form-control">
+            <select v-model="$v.selectedCategory.$model" class="form-control">
               <option :key="category" v-for="category in categories" :value="category">{{ category }}</option>
             </select>
+            <small v-if="!$v.selectedCategory.checked" class="form-text text-danger">Sadece yazılım alanı seçilebilir!</small>
           </div>
 
           <a @click="newHobby" class="text-white btn btn-secondary rounded-0 btn-sm">İlgi Alanı Ekle</a>
@@ -80,7 +81,7 @@
         email : null,
         password : null,
         repassword : null,
-        selectedCategory : null,
+        selectedCategory : "Yazılım",
         age: null,
         categories : ["Yazılım", "Donanım", "Cloud", "Sunucular", "Unix", "Linux", "Mac OS", "Windows"],
         hobbies: []
@@ -108,6 +109,11 @@
         required,
         numeric,
         between:  between(18, 60)
+      },
+      selectedCategory: {
+        checked(val, vm) {
+          return vm.selectedCategory === 'Yazılım' ? true : false;
+        }
       }
     },
     methods: {
