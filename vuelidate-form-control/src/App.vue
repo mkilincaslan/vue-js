@@ -15,7 +15,7 @@
               placeholder="E-posta adresini giriniz"
             >
             <small v-if="!$v.email.required" class="form-text text-danger">Bu alan zorunludur!</small>
-            <small v-if="!$v.email.email" class="form-text text-danger">Gecerli bir e-posta adresi giriniz!</small>
+            <small v-if="!$v.email.email" class="form-text text-danger">Geçerli bir e-posta adresi giriniz!</small>
           </div>
           <div class="form-group">
             <label>Şifre</label>
@@ -27,7 +27,7 @@
               placeholder="Şifrenizi giriniz"
             >
             <small v-if="!$v.password.required" class="form-text text-danger">Bu alan zorunludur!</small>
-            <small v-if="!$v.password.numeric" class="form-text text-danger">Şifreniz rakamlardan olumalıdır!</small>
+            <small v-if="!$v.password.numeric" class="form-text text-danger">Şifreniz rakamlardan oluşmalıdır!</small>
             <small v-if="!$v.password.minLength" class="form-text text-danger">Min {{ $v.password.$params.minLength.min }} karakter içermelidir!</small>
             <small v-if="!$v.password.maxLength" class="form-text text-danger">Maks {{ $v.password.$params.maxLength.max }} karakteri geçmemelidir!</small>
           </div>
@@ -35,10 +35,17 @@
             <label>Şifre Tekrar</label>
             <input v-model="$v.repassword.$model" type="password" class="form-control" placeholder="Şifrenizi tekrar giriniz">
             <small v-if="!$v.repassword.required" class="form-text text-danger">Bu alan zorunludur!</small>
-            <small v-if="!$v.repassword.numeric" class="form-text text-danger">Şifreniz rakamlardan olumalıdır!</small>
+            <small v-if="!$v.repassword.numeric" class="form-text text-danger">Şifreniz rakamlardan oluşmalıdır!</small>
             <small v-if="!$v.repassword.minLength" class="form-text text-danger">Min {{ $v.repassword.$params.minLength.min }} karakter içermelidir!</small>
             <small v-if="!$v.repassword.maxLength" class="form-text text-danger">Maks {{ $v.repassword.$params.maxLength.max }} karakteri geçmemelidir!</small>
-            <small v-if="!$v.repassword.sameAs" class="form-text text-danger">Şifreler uyusmuyor!</small>
+            <small v-if="!$v.repassword.sameAs" class="form-text text-danger">Şifreler uyuşmuyor!</small>
+          </div>
+          <div class="form-group">
+            <label>Yaş</label>
+            <input v-model="$v.age.$model" type="text" class="form-control" placeholder="Yaşınız">
+            <small v-if="!$v.age.required" class="form-text text-danger">Bu alan zorunludur!</small>
+            <small v-if="!$v.age.numeric" class="form-text text-danger">Yaş alanı rakamlardan oluşmalıdır!</small>
+            <small v-if="!$v.age.between" class="form-text text-danger">Yaş alanı {{ $v.age.$params.between.min}} {{ $v.age.$params.between.max}} arasında olmalıdır!</small>
           </div>
           <div class="form-group">
             <label>Kayıt olmak istediğiniz kategori</label>
@@ -66,7 +73,7 @@
   </div>
 </template>
 <script>
-  import { required, email, numeric, minLength, maxLength, sameAs } from 'vuelidate/lib/validators';
+  import { required, email, numeric, minLength, maxLength, sameAs, between } from 'vuelidate/lib/validators';
   export default {
     data() {
       return {
@@ -74,6 +81,7 @@
         password : null,
         repassword : null,
         selectedCategory : null,
+        age: null,
         categories : ["Yazılım", "Donanım", "Cloud", "Sunucular", "Unix", "Linux", "Mac OS", "Windows"],
         hobbies: []
       }
@@ -95,6 +103,11 @@
         minLength: minLength(6),
         maxLength: maxLength(8),
         sameAs: sameAs('password')
+      },
+      age: {
+        required,
+        numeric,
+        between:  between(18, 60)
       }
     },
     methods: {
