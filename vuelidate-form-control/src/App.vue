@@ -33,7 +33,12 @@
           </div>
           <div class="form-group">
             <label>Şifre Tekrar</label>
-            <input v-model="repassword" type="password" class="form-control" placeholder="Şifrenizi tekrar giriniz">
+            <input v-model="$v.repassword.$model" type="password" class="form-control" placeholder="Şifrenizi tekrar giriniz">
+            <small v-if="!$v.repassword.required" class="form-text text-danger">Bu alan zorunludur!</small>
+            <small v-if="!$v.repassword.numeric" class="form-text text-danger">Şifreniz rakamlardan olumalıdır!</small>
+            <small v-if="!$v.repassword.minLength" class="form-text text-danger">Min {{ $v.repassword.$params.minLength.min }} karakter içermelidir!</small>
+            <small v-if="!$v.repassword.maxLength" class="form-text text-danger">Maks {{ $v.repassword.$params.maxLength.max }} karakteri geçmemelidir!</small>
+            <small v-if="!$v.repassword.sameAs" class="form-text text-danger">Şifreler uyusmuyor!</small>
           </div>
           <div class="form-group">
             <label>Kayıt olmak istediğiniz kategori</label>
@@ -61,7 +66,7 @@
   </div>
 </template>
 <script>
-  import { required, email, numeric, minLength, maxLength } from 'vuelidate/lib/validators';
+  import { required, email, numeric, minLength, maxLength, sameAs } from 'vuelidate/lib/validators';
   export default {
     data() {
       return {
@@ -83,6 +88,13 @@
         numeric,
         minLength: minLength(6),
         maxLength: maxLength(8)
+      },
+      repassword: {
+        required,
+        numeric,
+        minLength: minLength(6),
+        maxLength: maxLength(8),
+        sameAs: sameAs('password')
       }
     },
     methods: {
