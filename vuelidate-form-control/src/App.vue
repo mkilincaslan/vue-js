@@ -16,6 +16,7 @@
             >
             <small v-if="!$v.email.required" class="form-text text-danger">Bu alan zorunludur!</small>
             <small v-if="!$v.email.email" class="form-text text-danger">Geçerli bir e-posta adresi giriniz!</small>
+            <small v-if="!$v.email.unique" class="form-text text-danger">Lütfen farklı bir e-posta adresi giriniz!</small>
           </div>
           <div class="form-group">
             <label>Şifre</label>
@@ -57,14 +58,21 @@
 
           <a @click="newHobby" class="text-white btn btn-secondary rounded-0 btn-sm">İlgi Alanı Ekle</a>
 
+          <small v-if="!$v.hobbies.required" class="form-text text-danger">Bu alan zorunludur!</small>
+          <small v-if="!$v.hobbies.minLength" class="form-text text-danger">Min {{ $v.hobbies.$params.minLength.min }} karakter içermelidir!</small>
           <ul class="list-group mt-3 mb-3 border-0">
             <li :key="index" v-for="(hobby,index) in hobbies" class="list-group-item d-flex pl-2">
-              <input type="text" class="form-control mr-2" v-model="hobby.value">
+              <input
+                type="text"
+                class="form-control mr-2"
+                :class="{'is-invalid': $v.hobbies.$each[index].$error}"
+                @blur="$v.hobbies.$each[index].value.$touch()"
+                v-model="hobby.value">
               <button class="btn btn-sm btn-danger rounded-0" @click="hobbies.splice(index, 1)">Sil</button>
             </li>
           </ul>
          
-          <button class="btn btn-outline-secondary rounded-0">Kaydet</button>
+          <button :disabled="$v.$invalid" class="btn btn-outline-secondary rounded-0">Kaydet</button>
         </form>
       </div>
       <div class="card p-4 mt-3 shadow" style="width: 400px">
@@ -90,7 +98,20 @@
     validations: {
       email: {
         required,
-        email
+        email,
+        unique(val, vm) {
+          return val === 'kilincaslanmesut@gmail.com' ? false : true; // False means the error can appear
+        },
+        // Async example
+        /*
+        unique: async function (val, vm) {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(val !== 'kilincaslanmesut@gmail.com'); // False means the error can appear
+            }, 1000);
+          });
+        }
+        */
       },
       password: {
         required,
@@ -113,6 +134,18 @@
       selectedCategory: {
         checked(val, vm) {
           return vm.selectedCategory === 'Yazılım' ? true : false;
+        }
+      },
+      hobbies: {
+        // Array validation
+        required,
+        minLength: minLength(2),
+        $each: {
+          // Array elements
+          value: {
+            required,
+            minLength: minLength(5)
+          }
         }
       }
     },
