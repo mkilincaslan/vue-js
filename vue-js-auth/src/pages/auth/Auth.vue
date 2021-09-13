@@ -44,7 +44,7 @@
         },
         methods: {
             onSubmit() {
-                alert(this.user)
+                this.$store.dispatch("oAuth", { ...this.user, isUser: this.isUser });
             }
         }
     }
