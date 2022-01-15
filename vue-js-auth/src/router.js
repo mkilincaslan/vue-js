@@ -18,17 +18,8 @@ export const router = new VueRouter({
                 store.getters.isAuthenticated ? next() : next('/auth');
             } 
         },
-        { 
-            path: "/", 
-            component: Homepage, 
-            beforeEnter(to, from, next) {
-                store.getters.isAuthenticated ? next() : next('/auth');
-            }  
-        },
-        { 
-            path: "/auth", 
-            component: Auth, 
-        },
+        { path: "/", component: Homepage },
+        { path: "/auth", component: Auth },
     ],
     mode: "history"
 });
