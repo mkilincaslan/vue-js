@@ -22,12 +22,14 @@
   export default {
     methods: {
       logout() {
+        this.$store.dispatch("logout");
+        this.$router.replace('/');
       }
     },
     computed: {
       logoutClass() {
         return {
-          'd-none': false
+          'd-none': !this.$store.getters.isAuthenticated // Get reverse to add or remove 'none' class
         }
       }
     }

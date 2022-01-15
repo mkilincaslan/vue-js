@@ -56,7 +56,9 @@ const store = new Vuex.Store({
                     }
                 });
         },
-        logout({commit, dispatch, state}) {},
+        logout({ commit }) {
+            commit('clearToken');
+        },
     },
     getters: {
         isAuthenticated(state) {
