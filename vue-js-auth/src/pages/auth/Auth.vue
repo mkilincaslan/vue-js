@@ -44,7 +44,11 @@
         },
         methods: {
             onSubmit() {
-                this.$store.dispatch("oAuth", { ...this.user, isUser: this.isUser });
+                this.$store.dispatch("oAuth", { ...this.user, isUser: this.isUser })
+                    .then(() => {
+                        console.log(response);
+                        this.$router.push('/');
+                    });
             }
         }
     }
