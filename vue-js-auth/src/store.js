@@ -16,7 +16,7 @@ const store = new Vuex.Store({
             password: null,
             message: null,
         },
-        tokenExpiredMessage: false,
+        tokenExpiredMessage: false, // Make true when we gonna show message
     },
     mutations: {
         setToken(state, token) {
@@ -31,6 +31,14 @@ const store = new Vuex.Store({
     },
     actions: {
         initAuth({ commit, dispatch, state }) {
+            // Initialize auth section
+            /**
+            * 1. Get token from localStorage
+            * 2. Check token is exist
+            * 3. If token is exist then get expirationDate of token
+            * 4. If expirationDate is expired then remove token and redirect to home
+            * 5. Else setToken to state and run tokenExpiration timer function
+            */
             const token = localStorage.getItem('token');
             if (token) {
                 const expirationDate = localStorage.getItem('expirationDate');
@@ -47,6 +55,7 @@ const store = new Vuex.Store({
             }
         },
         oAuth(vContext, authData) {
+            // oAuth func register and login section action
             const { commit, dispatch} = vContext;
             BASE_URL += 
                 authData.isUser ? 
@@ -63,19 +72,22 @@ const store = new Vuex.Store({
                     commit("setToken", data.idToken);
                     localStorage.setItem('token', data.idToken);
                     localStorage.setItem('expirationDate', new Date().getTime() + data.expiresIn * 1000);
-                    dispatch('tokenExpiration', data.expiresIn * 1000);
-                    router.replace('/');
+                    dispatch('tokenExpiration', data.expiresIn * 1000); // Run tokenExpiration timer function
+                    router.replace('/'); // Redirect home
                 })
                 .catch(({ response }) => {
                     if (response.data.error.message.split('_')[0] === 'EMAIL') {
+                        // If error is regarding email then set error to email value in errors
                         commit('setError', {
                             email: response.data.error.message,
                         });
                     } else if (response.data.error.message.split('_')[1] === 'PASSWORD') {
+                        // If error is regarding password then set error to password value in errors
                         commit('setError', {
                             password: response.data.error.message,
                         });
                     } else {
+                        // If error is regarding something else set error to message value
                         commit('setError', {
                             message: response.data.error.message,
                         });
@@ -83,6 +95,7 @@ const store = new Vuex.Store({
                 });
         },
         clearErrors ({ state }) {
+            // Clear all errors from state
             state.errors = {
                 email: null,
                 password: null,
@@ -90,6 +103,11 @@ const store = new Vuex.Store({
             };
         },
         logout({ commit, state }) {
+            /**
+             * 1. Remove token from state
+             * 2. Remove token and expirationDate of token from localStorage
+             * 3. Redirect to home
+             */
             commit('clearToken');
             localStorage.removeItem('token');
             localStorage.removeItem('expirationDate');
