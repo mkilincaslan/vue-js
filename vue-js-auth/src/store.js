@@ -10,23 +10,32 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         token: "",
+        error: {
+            email: null,
+            password: null,
+            message: null,
+        }
     },
     mutations: {
         setToken(state, token) {
             state.token = token;
+        },
+        setError(state, payload) {
+            state.error = Object.assign(state.error, payload);
         },
         clearToken(state) {
             state.token = "";
         }
     },
     actions: {
-        oAuth({commit, dispatch, state}, authData) {
+        oAuth(vContext, authData) {
+            const { commit } = vContext;
             BASE_URL += 
                 authData.isUser ? 
                     `:signInWithPassword?key=${FIREBASE_API_KEY}` : 
                     `:signUp?key=${FIREBASE_API_KEY}`;
 
-            axios
+            return axios
                 .post(BASE_URL, {
                     email: authData.email,
                     password: authData.password,
@@ -35,14 +44,24 @@ const store = new Vuex.Store({
                 .then(({data}) => {
                     commit("setToken", data.idToken);
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(({ response }) => {
+                    if (response.data.error.message === 'EMAIL_EXISTS') {
+                        commit('setError', {
+                            email: response.data.error.message,
+                        });
+                    } else {
+                        commit('setError', {
+                            message: response.data.error.message,
+                        });
+                    }
                 });
         },
         logout({commit, dispatch, state}) {},
     },
     getters: {
-        
+        isAuthenticated(state) {
+            return state.token !== '';
+        }
     },
 });
 
