@@ -6,14 +6,16 @@
       @keypress.enter="addTodo"
       placeholder="Add a new todo..."
     />
-    <div v-if="todos.length">
-      <transition-group tag="ul" name="list" appear>
-        <li v-for="todo in todos" :key="todo.id" @click="deleteTodo(todo.id)">
-          {{ todo.text }}
-        </li>
-      </transition-group>
-    </div>
-    <div v-else>Woohoo, nothing left todo!</div>
+    <transition name="switch" mode="out-in">
+      <div v-if="todos.length">
+        <transition-group tag="ul" name="list" appear>
+          <li v-for="todo in todos" :key="todo.id" @click="deleteTodo(todo.id)">
+            {{ todo.text }}
+          </li>
+        </transition-group>
+      </div>
+      <div v-else>Woohoo, nothing left todo!</div>
+    </transition>
   </div>
 </template>
 
@@ -104,5 +106,20 @@ export default {
   .list-leave-active {
     position: absolute; /* ensure leaving items are taken out of layout flow so that moving
    animations can be calculated correctly. */
+  }
+
+  .switch-enter-from, .switch-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  /* Default values
+  .switch-enter-to, .switch-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  } */
+
+  .switch-enter-active, .switch-leave-active {
+    transition: all 0.5s ease;
   }
 </style>
